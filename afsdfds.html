@@ -1123,7 +1123,7 @@ function fetchGameList() {
     
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">Theme Color</div>
+        <div class="settings-row-title">change color accent</div>
         <div class="settings-row-desc">Shifts the accent and card colors across the whole site.</div>
         <input type="range" id="theme-hue-slider" min="0" max="360" value="186">
         <div id="theme-hue-preview">
@@ -1135,8 +1135,8 @@ function fetchGameList() {
     
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">Logo Style</div>
-        <div class="settings-row-desc">Switch between the current image logo and the original white-text logo.</div>
+        <div class="settings-row-title">change logo</div>
+        <div class="settings-row-desc">Switch between the current image logo and the OG logo.</div>
         <label class="settings-toggle-row"><span>Use old white-text logo</span><input type="checkbox" id="old-logo-toggle"></label>
       </div>
     </div>
@@ -1144,7 +1144,7 @@ function fetchGameList() {
     <div class="settings-section">
       <div class="settings-row">
         <div class="settings-row-title">Appearance</div>
-        <div class="settings-row-desc">Switch the website between light and dark themes.</div>
+        <div class="settings-row-desc">Switch the website between light and dark themes. may be buggy on svg links</div>
         <label class="settings-toggle-row"><span>Light mode</span><input type="checkbox" id="light-mode-toggle"></label>
       </div>
     </div>
@@ -1152,7 +1152,7 @@ function fetchGameList() {
     <div class="settings-section">
       <div class="settings-row">
         <div class="settings-row-title">Panic Key</div>
-        <div class="settings-row-desc">Press the assigned key anywhere on the page to navigate to your chosen destination.</div>
+        <div class="settings-row-desc">may not work on svg links.</div>
         <input type="url" id="panic-key-destination" placeholder="https://www.google.com" value="https://www.google.com" style="width:100%;box-sizing:border-box;padding:10px 14px;background:var(--card-bg);border:2px solid var(--border-dim);border-radius:10px;color:#fff;font-family:'Fredoka',sans-serif;font-size:15px;outline:none;">
         <div id="panic-key-display">
           <span id="panic-key-badge">—</span>
