@@ -1,39 +1,10 @@
-
 <html lang="en"><head>
 <script>
 (function() {
   var sid = new URLSearchParams(window.location.search).get('sid') || '';
   if (!sid) return;
   function wipe() {
-    document.head.innerHTML = '<style>*{margin:0;padding:0;box-sizing:border-box;}html,body{height:100%;background:#000;}#kick-msg{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:999999;font-family:monospace;}
-
-  /* Logo selector and settings toggles */
-  #old-site-logo { display:none; color:#fff; font-family:'Fredoka',sans-serif; font-size:30px; font-weight:700; white-space:nowrap; margin-right:6px; }
-  #old-site-logo.visible { display:inline-block; }
-  .site-logo.hidden { display:none !important; }
-  .settings-toggle-row { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 14px; border-radius:10px; background:var(--card-bg); border:2px solid var(--border-dim); color:var(--text-main); font-size:14px; cursor:pointer; }
-  .settings-toggle-row input { width:19px; height:19px; accent-color:hsl(var(--theme-hue),80%,55%); cursor:pointer; flex-shrink:0; }
-
-  /* Light appearance */
-  html.light-mode { --bg-color:#f3f5f7; --card-bg:#fff; --text-main:#172024; --text-dim:#53636b; --border-dim:rgba(30,45,50,.17); --border-hover:rgba(30,45,50,.45); color-scheme:light; }
-  html.light-mode body { background:var(--bg-color); color:var(--text-main); }
-  html.light-mode header.site-header, html.light-mode #fg-header, html.light-mode #settings-header { background:#fff !important; color:#172024 !important; border-bottom-color:#dce2e6; }
-  html.light-mode #fg-title, html.light-mode #settings-header-title, html.light-mode .settings-row-title, html.light-mode .game-title { color:#172024; }
-  html.light-mode .card { color:#172024; background:#fff; }
-  html.light-mode #searchInput { background:#edf0f2 !important; color:#172024 !important; }
-  html.light-mode #searchInput::placeholder { color:#687780; }
-  html.light-mode #gameCount, html.light-mode .card p, html.light-mode .settings-row-desc, html.light-mode .settings-section-label { color:#53636b !important; }
-  html.light-mode footer { color:#53636b; }
-  html.light-mode #settings-panel { background:#f3f5f7; }
-  html.light-mode #theme-hue-value, html.light-mode #page-title-feedback { color:#53636b; }
-  html.light-mode #panic-key-badge, html.light-mode #panic-key-destination, html.light-mode #page-title-input { background:#fff !important; color:#172024 !important; }
-  html.light-mode #open-about-blank-btn, html.light-mode #panic-key-btn, html.light-mode #page-title-save { color:#172024; }
-  html.light-mode #old-site-logo { color:#172024; }
-  /* Keep the game area black for compatibility */
-  html.light-mode #fg-viewer, html.light-mode #fg-game-area { background:#000; }
-  html.light-mode #fg-header .fg-btn { color:#172024; }
-
-</style>';
+    document.head.innerHTML = '<style>*{margin:0;padding:0;box-sizing:border-box;}html,body{height:100%;background:#000;}#kick-msg{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:999999;font-family:monospace;}</style>';
     document.body.innerHTML = '<div id="kick-msg"><p style="color:#ff416c;font-size:1.2rem;">You have been removed.</p><a href="/" style="color:#4facfe;font-size:.9rem;">Return home</a></div>';
     document.querySelectorAll('iframe').forEach(function(f){ f.src='about:blank'; });
   }
@@ -86,7 +57,11 @@
     z-index: 9999;
     box-sizing: border-box;
     width: 100%;
-    border-bottom: 1px solid #1f292a;
+    background: rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 1px 0 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.4);
   }
 
   header.site-header h1 {
@@ -134,6 +109,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     text-decoration: none;
     color: inherit;
+    will-change: transform;
+    contain: layout style;
   }
 
   .card:hover, .card:focus {
@@ -150,14 +127,12 @@
   }
   @media (max-width: 600px) {
     .game-container { grid-template-columns: minmax(0, 220px); }
-    header.site-header > div { gap:8px !important; padding:0 !important; flex-wrap:wrap; }
-    .site-logo { height:40px; max-width:140px; }
-    #searchInput { min-width:120px; }
   }
 
   img:not(.nav-icon-btn img):not(.fg-btn img):not(.site-logo) { display: none !important; }
   .nav-icon-btn img, .fg-btn img, .site-logo { display: block !important; }
-  .site-logo { display:block; height:48px; width:auto; max-width:180px; min-width:0; margin-right:6px; object-fit:contain; flex:0 1 auto; }
+  .site-logo { height: 56px; width: auto; max-width: none; margin-right: 6px; object-fit: contain; }
+  .logo-hidden { display: none !important; }
 
   .game-title {
     display: block;
@@ -189,10 +164,17 @@
     justify-content: space-between;
     padding: 0 16px;
     height: 56px;
-    background: #000000;
+    background: #000;
     flex-shrink: 0;
     border-bottom: 1px solid #1a1a1a;
     gap: 10px;
+  }
+  body.liquid-glass #fg-header {
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom-color: rgba(255,255,255,0.07);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.4);
   }
 
   #fg-title {
@@ -608,6 +590,196 @@
     min-height: 16px;
     transition: opacity 0.3s;
   }
+
+  /* ─── VANTA TOGGLE ─── */
+  .vanta-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 8px 0;
+  }
+  #vanta-toggle, #logo-toggle {
+    width: 60px;
+    height: 32px;
+    border-radius: 99px;
+    background: var(--card-bg);
+    border: 2px solid var(--border-dim);
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.35s cubic-bezier(0.4,0,0.2,1),
+                border-color 0.35s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.35s cubic-bezier(0.4,0,0.2,1);
+    outline: none;
+  }
+  #vanta-toggle:focus-visible, #logo-toggle:focus-visible {
+    box-shadow: 0 0 0 3px hsl(var(--theme-hue), 70%, 50%, 0.4);
+  }
+  #vanta-toggle.on, #logo-toggle.on {
+    background: hsl(var(--theme-hue), 65%, 32%);
+    border-color: hsl(var(--theme-hue), 65%, 52%);
+    box-shadow: 0 0 14px hsl(var(--theme-hue), 80%, 45%, 0.45),
+                inset 0 0 8px hsl(var(--theme-hue), 80%, 55%, 0.15);
+  }
+  #vanta-thumb, #logo-thumb {
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #64748b;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    transform: translateY(-50%);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
+                background 0.35s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  #vanta-toggle.on #vanta-thumb, #logo-toggle.on #logo-thumb {
+    transform: translateY(-50%) translateX(28px);
+    background: #fff;
+    box-shadow: 0 0 8px hsl(var(--theme-hue), 90%, 70%, 0.7),
+                0 1px 4px rgba(0,0,0,0.3);
+  }
+  /* little ripple ping on toggle-on */
+  #vanta-toggle::after, #logo-toggle::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 99px;
+    border: 2px solid hsl(var(--theme-hue), 70%, 55%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  #vanta-toggle.ping::after, #logo-toggle.ping::after {
+    animation: vanta-ping 0.5s cubic-bezier(0,0,0.2,1) forwards;
+  }
+  @keyframes vanta-ping {
+    0%   { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0;   transform: scale(1.25); }
+  }
+  #vanta-toggle-label, #logo-toggle-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dim);
+    transition: color 0.3s;
+    min-width: 24px;
+  }
+  #vanta-toggle.on ~ #vanta-toggle-label, #logo-toggle.on ~ #logo-toggle-label {
+    color: hsl(var(--theme-hue), 70%, 65%);
+  }
+
+  /* Vanta fog slider controls */
+  .vanta-sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .vanta-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .vanta-slider-row label {
+    font-size: 12px;
+    color: var(--text-dim);
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .vanta-slider-row input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-dim);
+    outline: none;
+    cursor: pointer;
+  }
+  .vanta-slider-row input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: hsl(var(--theme-hue), 60%, 60%);
+    border: 2px solid #000;
+    cursor: pointer;
+  }
+  .vanta-slider-row input[type=range]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: hsl(var(--theme-hue), 60%, 60%);
+    border: 2px solid #000;
+    cursor: pointer;
+  }
+  .vanta-slider-row .vanta-val {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: monospace;
+    width: 32px;
+    text-align: right;
+  }
+  /* ─── LIQUID GLASS ─── */
+  /* Cards get a tinted background only — no per-card backdrop-filter (too expensive at 276 elements) */
+  body.liquid-glass .card {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border-color: rgba(255, 255, 255, 0.13) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.09) !important;
+    transition: transform 0.2s ease, border-color 0.2s ease,
+                box-shadow 0.2s ease, background 0.2s ease !important;
+  }
+  body.liquid-glass .card:hover {
+    background: rgba(255, 255, 255, 0.13) !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.16) !important;
+  }
+  /* Small buttons are few — backdrop-filter is fine here */
+  body.liquid-glass .fg-btn,
+  body.liquid-glass .nav-icon-btn,
+  body.liquid-glass #open-about-blank-btn,
+  body.liquid-glass #page-title-save,
+  body.liquid-glass #panic-key-btn,
+  body.liquid-glass #panic-key-clear {
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(12px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(150%) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.1) !important;
+    transition: transform 0.2s ease, border-color 0.2s ease,
+                box-shadow 0.2s ease, background 0.2s ease !important;
+  }
+  body.liquid-glass .fg-btn:hover,
+  body.liquid-glass .nav-icon-btn:hover,
+  body.liquid-glass #open-about-blank-btn:hover,
+  body.liquid-glass #page-title-save:hover,
+  body.liquid-glass #panic-key-btn:hover {
+    background: rgba(255, 255, 255, 0.11) !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.18) !important;
+  }
+  body.liquid-glass .card.fav-card {
+    border-color: rgba(245, 197, 24, 0.35) !important;
+  }
+  body.liquid-glass .fg-btn-fav.active {
+    background: rgba(245, 197, 24, 0.1) !important;
+    border-color: rgba(245, 197, 24, 0.4) !important;
+  }
+  body.liquid-glass #panic-key-clear {
+    background: rgba(255, 80, 80, 0.06) !important;
+    border-color: rgba(255, 80, 80, 0.25) !important;
+  }
+  body.liquid-glass #panic-key-clear:hover {
+    background: rgba(255, 80, 80, 0.12) !important;
+    border-color: rgba(255, 80, 80, 0.5) !important;
+  }
 </style>
 
 <script>
@@ -620,79 +792,6 @@
     confirm("4games on top! unblockable edition");
   });
 </script>
-
-<style id="4games-logo-theme-fix">
-/* Logo selector */
-#old-site-logo { display:none; color:#fff; font-family:'Fredoka',sans-serif; font-size:30px; font-weight:700; white-space:nowrap; margin-right:6px; }
-#old-site-logo.visible { display:inline-block !important; }
-#current-site-logo.hidden { display:none !important; }
-/* Light mode palette and overrides */
-html.light-mode {
-  --bg-color:#f3f5f7;
-  --card-bg:#fff;
-  --text-main:#172024;
-  --text-dim:#53636b;
-  --border-dim:rgba(30,45,50,.17);
-  --border-hover:rgba(30,45,50,.45);
-  color-scheme:light;
-}
-html.light-mode body { background:#f3f5f7 !important; color:#172024 !important; }
-html.light-mode header,
-html.light-mode .site-header,
-html.light-mode #fg-header,
-html.light-mode #settings-header { background:#fff !important; color:#172024 !important; border-color:#dce2e6 !important; }
-html.light-mode #settings-panel,
-html.light-mode .settings-panel,
-html.light-mode .settings-section,
-html.light-mode .settings-content { background:#f3f5f7 !important; color:#172024 !important; }
-html.light-mode .card,
-html.light-mode .settings-toggle-row,
-html.light-mode .settings-row,
-html.light-mode .setting-card { background:#fff !important; color:#172024 !important; border-color:rgba(30,45,50,.17) !important; }
-html.light-mode h1, html.light-mode h2, html.light-mode h3,
-html.light-mode p, html.light-mode label, html.light-mode span,
-html.light-mode .game-title, html.light-mode .settings-row-title,
-html.light-mode #fg-title, html.light-mode #settings-header-title { color:#172024; }
-html.light-mode .settings-row-desc, html.light-mode .settings-section-label,
-html.light-mode #gameCount, html.light-mode footer { color:#53636b !important; }
-html.light-mode input:not([type="checkbox"]):not([type="range"]),
-html.light-mode textarea, html.light-mode select { background:#fff !important; color:#172024 !important; border-color:#cbd4d9 !important; }
-html.light-mode #searchInput { background:#edf0f2 !important; color:#172024 !important; }
-html.light-mode #searchInput::placeholder { color:#687780 !important; }
-html.light-mode #old-site-logo { color:#172024; }
-/* Keep games themselves dark for compatibility */
-html.light-mode #fg-viewer, html.light-mode #fg-game-area { background:#000 !important; }
-</style>
-
-
-<style id="4games-light-mode-text-fix">
-/* Force readable dark text throughout light mode, including inherited white-text rules. */
-html.light-mode body,
-html.light-mode body *:not(svg):not(path):not(iframe):not(video):not(img):not(canvas) {
-  color: #111 !important;
-}
-html.light-mode input,
-html.light-mode textarea,
-html.light-mode select,
-html.light-mode option,
-html.light-mode button {
-  color: #111 !important;
-}
-html.light-mode input::placeholder,
-html.light-mode textarea::placeholder {
-  color: #555 !important;
-  opacity: 1;
-}
-/* Preserve white text only on explicitly dark controls/buttons. */
-html.light-mode #fg-viewer,
-html.light-mode #fg-viewer *,
-html.light-mode #fg-game-area,
-html.light-mode #fg-game-area * {
-  color: inherit;
-}
-html.light-mode #old-site-logo { color: #111 !important; }
-</style>
-
 </head>
 <body>
 
@@ -1024,10 +1123,10 @@ function fetchGameList() {
 }
 </script>
 
-<header class="site-header" style="background:#000000;color:white;padding:16px 20px;">
+<header class="site-header" style="color:white;padding:16px 20px;">
   <div style="display:flex;align-items:center;gap:14px;max-width:1400px;margin:0 auto;padding:0 20px;">
-    <img src="https://ik.imagekit.io/rckdebdbt/GAMESsdaads%20(3).png" alt="4Games" class="site-logo" id="current-site-logo">
-    <span id="old-site-logo">4Games</span>
+    <img src="https://ik.imagekit.io/rckdebdbt/GAMESsdaads%20(3).png" alt="" class="site-logo" id="logo-img">
+    <span id="logo-text" class="logo-hidden" style="color:#fff;font-size:1.4rem;font-weight:700;letter-spacing:0.03em;">4Games</span>
 
     <a href="https://discord.4games.net/" class="nav-icon-btn" title="Discord Server">
       <img src="https://ik.imagekit.io/rckdebdbt/Copy%20of%20PARTS%20DISTRIBUTION%20CENTER%20(2).png" alt="Discord">
@@ -1038,7 +1137,7 @@ function fetchGameList() {
     </a>
 
     <button class="nav-icon-btn" id="settings-open-btn" onclick="settingsOpen()" title="Settings">
-      <img src="https://ik.imagekit.io/rckdebdbt/newtab%20(4).png?updatedAt=1792629691371" alt="Settings">
+      <img src="https://ik.imagekit.io/rckdebdbt/newtab%20(4).png" alt="Settings">
     </button>
 
     <a href="https://levitator-lagging-dynamic.ngrok-free.dev//ai.html" class="nav-icon-btn" title="AI">
@@ -1077,6 +1176,9 @@ function fetchGameList() {
       </button>
       <button class="fg-btn" onclick="fgReload()" title="Reload Game">
         <img src="https://ik.imagekit.io/rckdebdbt/reload.png" alt="Reload" onerror="this.style.display='none';this.parentNode.dataset.fallback='↺';this.parentNode.style.fontSize='20px';this.parentNode.style.color='#94a3b8';">
+      </button>
+      <button class="fg-btn" id="fg-console-btn" onclick="fgToggleConsole()" title="Developer Console" aria-label="Toggle developer console">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'/%3E%3Cline x1='12' y1='19' x2='20' y2='19'/%3E%3C/svg%3E" alt="Console">
       </button>
       <button class="fg-btn" onclick="fgOpenGameTab()" title="Open in New Tab">
         <img src="https://ik.imagekit.io/rckdebdbt/newtab.png" alt="New Tab" onerror="this.style.display='none';this.parentNode.dataset.fallback='↗';this.parentNode.style.fontSize='18px';this.parentNode.style.color='#94a3b8';">
@@ -1120,11 +1222,11 @@ function fetchGameList() {
 
   <div id="settings-body">
 
-    
+    <!-- ACCENT COLOR -->
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">change color accent</div>
-        <div class="settings-row-desc">Shifts the accent and card colors across the whole site.</div>
+        <div class="settings-row-title">accent color</div>
+        <div class="settings-row-desc">set accent color for button. make it look badass</div>
         <input type="range" id="theme-hue-slider" min="0" max="360" value="186">
         <div id="theme-hue-preview">
           <div id="theme-hue-swatch"></div>
@@ -1132,27 +1234,72 @@ function fetchGameList() {
       </div>
     </div>
 
-    
+    <!-- VANTA FOG BACKGROUND -->
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">change logo</div>
-        <div class="settings-row-desc">Switch between the current image logo and the OG logo.</div>
-        <label class="settings-toggle-row"><span>Use old white-text logo</span><input type="checkbox" id="old-logo-toggle"></label>
+        <div class="settings-row-title">vanta fog background</div>
+        <div class="settings-row-desc">animated fog effect that follows your accent color. looks sick but uses some gpu.</div>
+        <div class="vanta-toggle-row">
+          <div id="vanta-toggle" onclick="vantaToggle()" role="switch" aria-checked="false" tabindex="0">
+            <div id="vanta-thumb"></div>
+          </div>
+          <span id="vanta-toggle-label">off</span>
+        </div>
+        <div class="vanta-sliders" id="vanta-sliders" style="display:none;">
+          <div class="vanta-slider-row">
+            <label>blur</label>
+            <input type="range" id="vanta-blur" min="0" max="10" step="1" value="6">
+            <span class="vanta-val" id="vanta-blur-val">6</span>
+          </div>
+          <div class="vanta-slider-row">
+            <label>speed</label>
+            <input type="range" id="vanta-speed" min="1" max="20" step="1" value="12">
+            <span class="vanta-val" id="vanta-speed-val">1.2</span>
+          </div>
+          <div class="vanta-slider-row">
+            <label>zoom</label>
+            <input type="range" id="vanta-zoom" min="1" max="30" step="1" value="9">
+            <span class="vanta-val" id="vanta-zoom-val">0.9</span>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- LOGO STYLE -->
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">Appearance</div>
-        <div class="settings-row-desc">Switch the website between light and dark themes. may be buggy on svg links</div>
-        <label class="settings-toggle-row"><span>Light mode</span><input type="checkbox" id="light-mode-toggle"></label>
+        <div class="settings-row-title">logo style</div>
+        <div class="settings-row-desc">swap the logo image for plain white text.</div>
+        <div class="vanta-toggle-row">
+          <div id="logo-toggle" onclick="logoToggle()" role="switch" aria-checked="false" tabindex="0">
+            <div id="logo-thumb"></div>
+          </div>
+          <span id="logo-toggle-label">image</span>
+        </div>
       </div>
     </div>
 
+    <!-- LIQUID GLASS -->
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">Panic Key</div>
-        <div class="settings-row-desc">may not work on svg links.</div>
+        <div class="settings-row-title">liquid glass</div>
+        <div class="settings-row-desc">applies a frosted glass blur to all buttons and cards across the whole site.</div>
+        <div class="vanta-toggle-row">
+          <div id="lg-toggle" onclick="liquidGlassToggle()" role="switch" aria-checked="false" tabindex="0"
+            style="width:60px;height:32px;border-radius:99px;background:var(--card-bg);border:2px solid var(--border-dim);position:relative;cursor:pointer;flex-shrink:0;transition:background 0.35s cubic-bezier(0.4,0,0.2,1),border-color 0.35s cubic-bezier(0.4,0,0.2,1),box-shadow 0.35s cubic-bezier(0.4,0,0.2,1);outline:none;">
+            <div id="lg-thumb"
+              style="position:absolute;top:50%;left:3px;width:22px;height:22px;border-radius:50%;background:#64748b;box-shadow:0 1px 4px rgba(0,0,0,0.5);transform:translateY(-50%);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),background 0.35s,box-shadow 0.35s;"></div>
+          </div>
+          <span id="lg-toggle-label" style="font-size:14px;font-weight:600;color:var(--text-dim);transition:color 0.3s;min-width:24px;">off</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANIC KEY -->
+    <div class="settings-section">
+      <div class="settings-row">
+        <div class="settings-row-title">panic key</div>
+        <div class="settings-row-desc">panic key press that key to change tab instantly.</div>
         <input type="url" id="panic-key-destination" placeholder="https://www.google.com" value="https://www.google.com" style="width:100%;box-sizing:border-box;padding:10px 14px;background:var(--card-bg);border:2px solid var(--border-dim);border-radius:10px;color:#fff;font-family:'Fredoka',sans-serif;font-size:15px;outline:none;">
         <div id="panic-key-display">
           <span id="panic-key-badge">—</span>
@@ -1162,21 +1309,22 @@ function fetchGameList() {
       </div>
     </div>
 
-    
+    <!-- PAGE TITLE -->
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">Custom Page Title</div>
-        <div class="settings-row-desc">Changes what shows in the browser tab. Useful for disguising the page.</div>
+        <div class="settings-row-title">change page title</div>
+        <div class="settings-row-desc">tab cloak essentially. change page title name </div>
         <input type="text" id="page-title-input" placeholder="e.g. Google Classroom" maxlength="120">
         <button id="page-title-save" onclick="pageTitleSave()">Apply Title</button>
         <div id="page-title-feedback"></div>
       </div>
     </div>
 
+    <!-- OPEN IN BLANK -->
     <div class="settings-section">
       <div class="settings-row">
-        <div class="settings-row-title">Open in about:blank</div>
-        <div class="settings-row-desc">Opens a copy of this page in a blank tab. Some browser settings may block pop-ups.</div>
+        <div class="settings-row-title">open in blank</div>
+        <div class="settings-row-desc">opens game site in about blank :3</div>
         <button id="open-about-blank-btn" onclick="openCurrentPageInBlank()">Open Page</button>
       </div>
     </div>
@@ -1391,7 +1539,6 @@ function fetchGameList() {
 (function () {
   var SETTINGS_KEY = '4g_settings';
 
-  /* ── Load saved settings ── */
   function loadSettings() {
     try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; }
     catch(e) { return {}; }
@@ -1400,47 +1547,21 @@ function fetchGameList() {
     try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(obj)); } catch(e) {}
   }
 
-  /* ── Apply theme hue to :root ── */
   function applyHue(hue) {
     document.documentElement.style.setProperty('--theme-hue', hue);
     var swatch = document.getElementById('theme-hue-swatch');
     if (swatch) swatch.style.background = 'hsl(' + hue + ',60%,40%)';
   }
 
-  /* ── Theme slider ── */
   var slider = document.getElementById('theme-hue-slider');
   slider.addEventListener('input', function() {
     var hue = parseInt(this.value, 10);
     applyHue(hue);
     var s = loadSettings(); s.themeHue = hue; saveSettings(s);
+    // Update vanta colors live when hue changes
+    if (window.vantaUpdateColors) window.vantaUpdateColors();
   });
 
-  /* Logo selector */
-  var oldLogoToggle = document.getElementById('old-logo-toggle');
-  function applyLogoStyle(useOldLogo) {
-    var currentLogo = document.getElementById('current-site-logo');
-    var oldLogo = document.getElementById('old-site-logo');
-    if (currentLogo) currentLogo.classList.toggle('hidden', !!useOldLogo);
-    if (oldLogo) oldLogo.classList.toggle('visible', !!useOldLogo);
-    if (oldLogoToggle) oldLogoToggle.checked = !!useOldLogo;
-  }
-  oldLogoToggle.addEventListener('change', function() {
-    var settings = loadSettings(); settings.useOldLogo = this.checked; saveSettings(settings);
-    applyLogoStyle(this.checked);
-  });
-
-  /* Light / dark mode */
-  var lightModeToggle = document.getElementById('light-mode-toggle');
-  function applyColorMode(useLightMode) {
-    document.documentElement.classList.toggle('light-mode', !!useLightMode);
-    if (lightModeToggle) lightModeToggle.checked = !!useLightMode;
-  }
-  lightModeToggle.addEventListener('change', function() {
-    var settings = loadSettings(); settings.lightMode = this.checked; saveSettings(settings);
-    applyColorMode(this.checked);
-  });
-
-  /* ── Panic key ── */
   var panicKey = null;
   var panicDestination = 'https://www.google.com';
   var destinationInput = document.getElementById('panic-key-destination');
@@ -1496,13 +1617,10 @@ function fetchGameList() {
   };
 
   document.addEventListener('keydown', function(e) {
-    /* Settings panel escape */
     if (e.key === 'Escape' && document.getElementById('settings-panel').classList.contains('open')) {
       settingsClose();
       return;
     }
-
-    /* Capture new panic key */
     if (listenMode) {
       e.preventDefault();
       panicKey   = e.key;
@@ -1511,19 +1629,14 @@ function fetchGameList() {
       var s = loadSettings(); s.panicKey = panicKey; saveSettings(s);
       return;
     }
-
-    /* Don't trigger the panic key while editing a field or using a control. */
     var target = e.target;
     var tag = target && target.tagName ? target.tagName.toLowerCase() : '';
     if (tag === 'input' || tag === 'textarea' || tag === 'select' || (target && target.isContentEditable)) return;
-
-    /* Fire panic key */
     if (panicKey && e.key === panicKey) {
       window.location.href = panicDestination || 'https://www.google.com';
     }
   });
 
-  /* ── Page title ── */
   window.pageTitleSave = function() {
     var val = document.getElementById('page-title-input').value.trim();
     document.title = val || '4Math Tutoring Center';
@@ -1546,7 +1659,6 @@ function fetchGameList() {
     }
   };
 
-  /* ── Open / close settings panel ── */
   window.settingsOpen = function() {
     document.getElementById('settings-panel').classList.add('open');
     document.getElementById('settings-panel').setAttribute('aria-hidden', 'false');
@@ -1558,10 +1670,7 @@ function fetchGameList() {
     document.body.style.overflow = '';
   };
 
-  /* ── Restore on load ── */
   var saved = loadSettings();
-  applyLogoStyle(saved.useOldLogo === true);
-  applyColorMode(saved.lightMode === true);
 
   if (saved.themeHue !== undefined) {
     slider.value = saved.themeHue;
@@ -1590,6 +1699,298 @@ function fetchGameList() {
     document.getElementById('page-title-input').value = saved.pageTitle;
   }
 
+})();
+</script>
+
+
+<!-- ─── FOG ─── -->
+<style>
+#css-fog {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  display: none; /* hidden until enabled */
+  will-change: transform;
+}
+#css-fog.active { display: block; }
+
+.fog-blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+  will-change: transform;
+}
+
+@keyframes fog-drift-a {
+  0%   { transform: translate(0%,   0%)   scale(1);    }
+  33%  { transform: translate(12%,  8%)   scale(1.08); }
+  66%  { transform: translate(-8%,  14%)  scale(0.95); }
+  100% { transform: translate(0%,   0%)   scale(1);    }
+}
+@keyframes fog-drift-b {
+  0%   { transform: translate(0%,   0%)   scale(1);    }
+  33%  { transform: translate(-14%, -6%)  scale(1.1);  }
+  66%  { transform: translate(6%,  -12%)  scale(0.92); }
+  100% { transform: translate(0%,   0%)   scale(1);    }
+}
+@keyframes fog-drift-c {
+  0%   { transform: translate(0%,   0%)   scale(1);    }
+  40%  { transform: translate(10%, -10%)  scale(1.05); }
+  70%  { transform: translate(-6%,  6%)   scale(1.12); }
+  100% { transform: translate(0%,   0%)   scale(1);    }
+}
+@keyframes fog-drift-d {
+  0%   { transform: translate(0%,   0%)   scale(1);    }
+  50%  { transform: translate(-10%, 10%)  scale(0.9);  }
+  100% { transform: translate(0%,   0%)   scale(1);    }
+}
+@keyframes fog-drift-e {
+  0%   { transform: translate(0%,   0%)   scale(1);    }
+  30%  { transform: translate(8%,   12%)  scale(1.06); }
+  65%  { transform: translate(-12%, 4%)   scale(0.96); }
+  100% { transform: translate(0%,   0%)   scale(1);    }
+}
+</style>
+
+<script>
+(function () {
+  var SETTINGS_KEY = '4g_settings';
+  var fogEnabled  = false;
+  var storedBlur  = 2;
+  var storedSpeed = 12;
+  var storedZoom  = 9;
+
+  /* ── DOM creation ── */
+  var fogEl = null;
+
+  // Blob definitions: [left%, top%, width-vw, height-vh, animation-name, delay-s]
+  var BLOBS = [
+    ['-10%', '-15%', 90, 80,  'fog-drift-a', 0   ],
+    [ '50%', '-10%', 80, 75,  'fog-drift-b', 1.7 ],
+    [ '-5%',  '50%', 75, 85,  'fog-drift-c', 3.1 ],
+    [ '55%',  '55%', 85, 70,  'fog-drift-d', 0.8 ],
+    [ '20%',  '15%', 70, 90,  'fog-drift-e', 2.4 ],
+  ];
+
+  function ensureFogEl() {
+    if (fogEl) return fogEl;
+    fogEl = document.createElement('div');
+    fogEl.id = 'css-fog';
+    BLOBS.forEach(function(b) {
+      var d = document.createElement('div');
+      d.className = 'fog-blob';
+      d.style.left   = b[0];
+      d.style.top    = b[1];
+      d.style.width  = b[2] + 'vw';
+      d.style.height = b[3] + 'vh';
+      d.style.animationName           = b[4];
+      d.style.animationTimingFunction = 'ease-in-out';
+      d.style.animationIterationCount = 'infinite';
+      d.style.animationDelay          = b[5] + 's';
+      fogEl.appendChild(d);
+    });
+    document.body.prepend(fogEl);
+    return fogEl;
+  }
+
+  function getHue() {
+    return parseInt(document.documentElement.style.getPropertyValue('--theme-hue') || '186', 10);
+  }
+
+  function applyColors() {
+    if (!fogEl) return;
+    var hue = getHue();
+    // Alternate blobs between highlight and midtone hues
+    var cols = [
+      'hsl(' + hue       + ',60%,28%)',
+      'hsl(' + (hue + 20)% 360 + ',45%,18%)',
+      'hsl(' + hue       + ',55%,22%)',
+      'hsl(' + (hue - 15 + 360) % 360 + ',40%,15%)',
+      'hsl(' + (hue + 10)% 360 + ',50%,24%)',
+    ];
+    fogEl.querySelectorAll('.fog-blob').forEach(function(b, i) {
+      var c = cols[i % cols.length];
+      b.style.background = 'radial-gradient(ellipse at center, ' + c + ' 0%, transparent 70%)';
+    });
+  }
+
+  function applyBlur() {
+    if (!fogEl) return;
+    // storedBlur 0-10 → CSS blur 20px-120px
+    var px = 20 + storedBlur * 10;
+    fogEl.style.filter = 'blur(' + px + 'px)';
+  }
+
+  function applySpeed() {
+    if (!fogEl) return;
+    // storedSpeed 1-20 → duration 60s-4s (higher slider = faster)
+    var dur = (64 - storedSpeed * 3).toFixed(1) + 's';
+    fogEl.querySelectorAll('.fog-blob').forEach(function(b) {
+      b.style.animationDuration = dur;
+    });
+  }
+
+  function applyZoom() {
+    if (!fogEl) return;
+    // storedZoom 1-30 → scale 0.7-2.0
+    var sc = (0.7 + storedZoom * 0.043).toFixed(3);
+    fogEl.style.transform = 'scale(' + sc + ')';
+    fogEl.style.transformOrigin = '50% 50%';
+  }
+
+  function fogStart() {
+    var el = ensureFogEl();
+    applyColors();
+    applyBlur();
+    applySpeed();
+    applyZoom();
+    el.classList.add('active');
+  }
+
+  function fogStop() {
+    if (fogEl) fogEl.classList.remove('active');
+  }
+
+  function setUI(on) {
+    var toggle  = document.getElementById('vanta-toggle');
+    var label   = document.getElementById('vanta-toggle-label');
+    var sliders = document.getElementById('vanta-sliders');
+    if (!toggle) return;
+    toggle.setAttribute('aria-checked', String(on));
+    toggle.classList.toggle('on', on);
+    label.textContent = on ? 'on' : 'off';
+    label.style.color = on
+      ? 'hsl(' + (document.documentElement.style.getPropertyValue('--theme-hue') || '186') + ',70%,65%)'
+      : '';
+    sliders.style.display = on ? 'flex' : 'none';
+  }
+
+  window.vantaToggle = function () {
+    fogEnabled = !fogEnabled;
+    if (fogEnabled) fogStart(); else fogStop();
+    setUI(fogEnabled);
+    persist();
+    var t = document.getElementById('vanta-toggle');
+    if (t) {
+      t.classList.remove('ping');
+      void t.offsetWidth;
+      t.classList.add('ping');
+      setTimeout(function() { t.classList.remove('ping'); }, 500);
+    }
+  };
+
+  window.vantaUpdateColors = function () { applyColors(); };
+
+  function persist() {
+    try {
+      var s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+      s.vantaFog   = fogEnabled;
+      s.vantaBlur  = storedBlur;
+      s.vantaSpeed = storedSpeed;
+      s.vantaZoom  = storedZoom;
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+    } catch (e) {}
+  }
+
+  function wireSlider(id, valId, getStored, setStored, divisor, applyFn) {
+    var el  = document.getElementById(id);
+    var val = document.getElementById(valId);
+    if (!el || !val) return;
+    el.value = getStored();
+    val.textContent = (getStored() / divisor).toFixed(1);
+    el.addEventListener('input', function () {
+      var raw = parseInt(this.value, 10);
+      val.textContent = (raw / divisor).toFixed(1);
+      setStored(raw);
+      applyFn();
+      persist();
+    });
+  }
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    if (saved.vantaBlur  !== undefined) storedBlur  = saved.vantaBlur;
+    if (saved.vantaSpeed !== undefined) storedSpeed = saved.vantaSpeed;
+    if (saved.vantaZoom  !== undefined) storedZoom  = saved.vantaZoom;
+    if (saved.vantaFog) {
+      fogEnabled = true;
+      window.addEventListener('load', function () { fogStart(); setUI(true); });
+    }
+  } catch (e) {}
+
+  document.addEventListener('DOMContentLoaded', function () {
+    wireSlider('vanta-blur',  'vanta-blur-val',
+      function(){ return storedBlur; },  function(v){ storedBlur  = v; }, 10, applyBlur);
+    wireSlider('vanta-speed', 'vanta-speed-val',
+      function(){ return storedSpeed; }, function(v){ storedSpeed = v; }, 10, applySpeed);
+    wireSlider('vanta-zoom',  'vanta-zoom-val',
+      function(){ return storedZoom; },  function(v){ storedZoom  = v; }, 10, applyZoom);
+    setUI(fogEnabled);
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var SETTINGS_KEY = '4g_settings';
+  var lgEnabled = false;
+
+  function getHue() {
+    return document.documentElement.style.getPropertyValue('--theme-hue') || '186';
+  }
+
+  function setLGUI(on) {
+    var toggle = document.getElementById('lg-toggle');
+    var thumb  = document.getElementById('lg-thumb');
+    var label  = document.getElementById('lg-toggle-label');
+    if (!toggle) return;
+    toggle.setAttribute('aria-checked', String(on));
+    toggle.style.background    = on ? 'hsl(' + getHue() + ',65%,32%)' : '';
+    toggle.style.borderColor   = on ? 'hsl(' + getHue() + ',65%,52%)' : '';
+    toggle.style.boxShadow     = on ? '0 0 14px hsl(' + getHue() + ',80%,45%,0.45)' : '';
+    thumb.style.transform      = on ? 'translateY(-50%) translateX(28px)' : 'translateY(-50%)';
+    thumb.style.background     = on ? '#fff' : '#64748b';
+    thumb.style.boxShadow      = on ? '0 0 8px hsl(' + getHue() + ',90%,70%,0.7),0 1px 4px rgba(0,0,0,0.3)' : '0 1px 4px rgba(0,0,0,0.5)';
+    label.textContent          = on ? 'on' : 'off';
+    label.style.color          = on ? 'hsl(' + getHue() + ',70%,65%)' : '';
+  }
+
+  function applyLG(on) {
+    document.body.classList.toggle('liquid-glass', on);
+  }
+
+  function persist() {
+    try {
+      var s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+      s.liquidGlass = lgEnabled;
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+    } catch(e) {}
+  }
+
+  window.liquidGlassToggle = function () {
+    lgEnabled = !lgEnabled;
+    applyLG(lgEnabled);
+    setLGUI(lgEnabled);
+    persist();
+    // ping ripple
+    var t = document.getElementById('lg-toggle');
+    if (t) {
+      t.style.outline = '2px solid hsl(' + getHue() + ',70%,55%)';
+      t.style.outlineOffset = '3px';
+      setTimeout(function() { t.style.outline = ''; t.style.outlineOffset = ''; }, 400);
+    }
+  };
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    if (saved.liquidGlass) {
+      lgEnabled = true;
+      applyLG(true);
+      document.addEventListener('DOMContentLoaded', function () { setLGUI(true); });
+    }
+  } catch(e) {}
 })();
 </script>
 
@@ -1674,4 +2075,49 @@ function fetchGameList() {
 })();
 </script>
 
+
+<script>
+(function () {
+  var SETTINGS_KEY = '4g_settings';
+  var textLogo = false;
+
+  function applyLogo(text) {
+    document.getElementById('logo-img').classList.toggle('logo-hidden', text);
+    document.getElementById('logo-text').classList.toggle('logo-hidden', !text);
+  }
+
+  function setUI(text) {
+    var toggle = document.getElementById('logo-toggle');
+    var label  = document.getElementById('logo-toggle-label');
+    if (!toggle) return;
+    toggle.setAttribute('aria-checked', String(text));
+    toggle.classList.toggle('on', text);
+    label.textContent = text ? 'text' : 'image';
+    label.style.color = text
+      ? 'hsl(' + (document.documentElement.style.getPropertyValue('--theme-hue') || '186') + ',70%,65%)'
+      : '';
+  }
+
+  window.logoToggle = function () {
+    textLogo = !textLogo;
+    applyLogo(textLogo);
+    setUI(textLogo);
+    var t = document.getElementById('logo-toggle');
+    if (t) { t.classList.remove('ping'); void t.offsetWidth; t.classList.add('ping'); setTimeout(function(){ t.classList.remove('ping'); }, 500); }
+    try {
+      var s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+      s.textLogo = textLogo;
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+    } catch(e) {}
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    try {
+      var saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+      if (saved.textLogo) { textLogo = true; applyLogo(true); }
+    } catch(e) {}
+    setUI(textLogo);
+  });
+})();
+</script>
 </body></html>
